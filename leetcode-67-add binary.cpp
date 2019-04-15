@@ -31,7 +31,7 @@ int main(){
     while(scanf("%s %s", a, b) == 2){
     	cout << s.addBinary(a, b) << endl;
 	}
-    
+
     return 0;
 
 }
