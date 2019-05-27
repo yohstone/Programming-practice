@@ -1,3 +1,6 @@
 *.exe
 /example code
 *.o
+/leetcode-code
+
+
