@@ -30,7 +30,7 @@ public:
         bool goingDown = false; // 方向标志位 true：方向向下，行+1； false：方向斜向上，行-1
         vector<string> convertArr(min(numRows, sLen)); // 使用min防止有空行
 
-        // 以Z字形将字符串放入容器中
+        // 以Z字形将字符串放入vector容器中
         for(int i = 0; i < sLen; i++ ){
             convertArr[currRow] += s[i];
             cout << convertArr[currRow] << endl;
@@ -42,7 +42,6 @@ public:
             }else{
                 currRow--;
             }
-
         }
         string res = "";
         for(int i = 0; i < convertArr.size(); i++){
@@ -54,7 +53,7 @@ public:
 /*    方法2： 找规律，令 n = numRows， row为Z字形结果矩阵的行号
  *            每一行字符下标 i 间差值的规律为：
  *            首尾两行： interval = 2*n - 2
- *            中间行：interval = 2*n - 2*row 或  interval = 2*row
+ *            中间行：interval = 2*n - 2 - 2*row 或  interval = 2*row
  */
 
     string convert2(string s, int numRows) {
