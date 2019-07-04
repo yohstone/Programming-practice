@@ -1,3 +1,3 @@
 // Write a SQL query to find all duplicate emails in a table named Person.
 
-select Email from Person Group by Email having count(Email) > 1
+SELECT Email FROM Person GROUP BY Email HAVING COUNT(Email) > 1

@@ -18,7 +18,7 @@
 
 
 -- 方法1
-select a.name as Employee from Employee as a, Employee as b where a.ManagerId = b.Id and a.Salary > b.Salary;
+SELECT a.name AS Employee FROM Employee AS a, Employee AS b WHERE a.ManagerId = b.Id AND a.Salary > b.Salary;
 
 -- 方法2
-select a.name as Employee from Employee as a join Employee as b on a.ManagerId = b.Id and a.Salary > b.Salary;
+SELECT a.name AS Employee from Employee AS a JOIN Employee AS b ON a.ManagerId = b.Id AND a.Salary > b.Salary;
