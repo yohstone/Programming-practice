@@ -16,6 +16,7 @@ using namespace std;
 
 class Solution{
 public:
+    // 思路：n如果是2的幂, 二进制下最高位为1, 其余全是0; n-1要么等于0, 要么二进制下都是1; n&(n-1)必为0
     bool isPowerOfTwo(int n){
         if( n > 0 && ( n & (n-1)) == 0  )
             return true;
