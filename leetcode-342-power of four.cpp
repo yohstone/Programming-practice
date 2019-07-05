@@ -1,6 +1,16 @@
 #include<iostream>
 using namespace std;
 
+/* Given an integer (signed 32 bits), write a function to check whether it is a power of 4.
+ *
+ * Example 1:
+ *
+ * Input: 16
+ * Output: true
+ */
+
+
+
 class Solution{
 public:
     // 方法1： 迭代，击败100%。。。
