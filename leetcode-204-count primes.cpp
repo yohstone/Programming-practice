@@ -74,9 +74,6 @@ public:
     int countPrimes3(int n){
         vector<bool> num(n, true);
         int count = 0;
-        if(n < 3){
-            return 0;
-        }
 
         for(int i = 2; i < n; i++){
             if(num[i]){
