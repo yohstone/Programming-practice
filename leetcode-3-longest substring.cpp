@@ -1,85 +1,94 @@
-//¸ø¶¨Ò»¸ö×Ö·û´®£¬ÇëÄãÕÒ³öÆäÖĞ²»º¬ÓĞÖØ¸´×Ö·ûµÄ ×î³¤×Ó´® µÄ³¤¶È¡£
-//ÊäÈë: "pwwkew"
-//Êä³ö: 3
-//½âÊÍ: ÒòÎªÎŞÖØ¸´×Ö·ûµÄ×î³¤×Ó´®ÊÇ "wke"£¬ËùÒÔÆä³¤¶ÈÎª 3¡£
-//     Çë×¢Òâ£¬ÄãµÄ´ğ°¸±ØĞëÊÇ ×Ó´® µÄ³¤¶È£¬"pwke" ÊÇÒ»¸ö×ÓĞòÁĞ£¬²»ÊÇ×Ó´®¡£
- 
 #include<iostream>
 #include<string>
 #include<set>
 #include<algorithm>
 #include<map>
 using namespace std;
+
+/* Given a string, find the length of the longest substring without repeating characters.
+ *
+ * Example 1:
+ *
+ * Input: "abcabcbb"
+ * Output: 3
+ * Explanation: The answer is "abc", with the length of 3.
+ * Example 2:
+ *
+ * Input: "bbbbb"
+ * Output: 1
+ * Explanation: The answer is "b", with the length of 1.
+ * Example 3:
+ *
+ * Input: "pwwkew"
+ * Output: 3
+ * Explanation: The answer is "wke", with the length of 3.
+ *              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+ */
+
+
 class Solution {
 public:
-	
-	//·½·¨2£¬»¬¶¯´°¿Ú1
-	//s[i] Óë s[j]ÖØ¸´Ê±£¬iÓÒÒÆÒ»Î» 
-    int lengthOfLongestSubstring2(string s) {
-		set<char> substr,t;
-		int n = s.length();
-        int i=0,res=0,j=0;
-        while(i<n && j < n){
-        	if(substr.find(s[j]) == substr.end()) {
-        		substr.insert(s[j++]);
-				res = max(res, j-i);	
-			}else{
-				substr.erase(s[i++]);			
-			}
-//			t = substr;
-//			while(t.begin() != t.end()){
-//				cout << *t.begin();
-//				t.erase(t.begin());
-//			}
-//			cout << endl;
-		}
+    // æ–¹æ³•1ï¼Œæš´åŠ›æ³•ï¼Œç•¥
 
-		return res;
-    }
-    
-	//·½·¨3£¬»¬¶¯´°¿Ú2
-	//s[i] Óë s[j]ÖØ¸´Ê±£¬iÌøµ½j 
-    int lengthOfLongestSubstring3(string s) {
-		map<char, int> substr,t;//¼ÇÂ¼×Ó´®×Ö·ûÒÔ¼°×Ö·ûµÄÎ»ÖÃ 
-		int n = s.length();
-        int i=0,res=0,j=0;
-        for( ;j< n;j++){
-        	map<char,int>::iterator x = substr.find(s[j]);
-        	if( x != substr.end()){
-        		//cout<< x->first << "--" << x->second <<endl; 
-        		i = max(x->second, i);//ÖØ¸´×Ö·ûÏÂÒ»¸öÎ»ÖÃºÍµ±Ç°i±È½Ï 
-        		substr[s[j]] = j+1;   	//¸üĞÂÖØ¸´×Ö·ûµÄÎ»ÖÃË÷Òı£¬È¡¿¿ºóµÄÎ»ÖÃ	
-			}
-			res = max(res, j-i+1);
-        	substr.insert( pair<char, int>(s[j], j+1 ) );//´æ´¢×Ö·ûËùÔÚÎ»ÖÃ 
-		} 
-//			t = substr;
-//			while(t.begin() != t.end()){
-//				cout<< t.begin()->first << "--" << t.begin()->second <<endl; 
-//				t.erase(t.begin());
-//			}
-//			cout << endl;
-		return res;
-    }
-    
-	//·½·¨4£¬×Ö·û¼¯ 
-	//Ë¼Â·ºÍÓÅ»¯°æ»¬¶¯´°¿ÚÀàËÆ  £¬ s[i] Óë s[j]ÖØ¸´Ê±£¬iÌøµ½j 
-    int lengthOfLongestSubstring4(string s) {
-		int n = s.length();
-		int index[128] = {0}; 
-        int i=0,res=0,j=0;
-        for( ;j< n;j++){
-        	i = max(index[s[j]], i);
-        	res = max(res, j-i+1);
-        	index[s[j]] = j +1;   
+    // æ–¹æ³•2ï¼Œæ»‘åŠ¨çª—å£1
+    // ä½¿ç”¨ä¸€ä¸ªsetå­˜å‚¨å½“å‰å­ä¸²ï¼Œåˆ¤æ–­å½“å‰çš„s[j]æ˜¯å¦å­˜åœ¨setä¸­ï¼Œè‹¥å­˜åœ¨ï¼Œè¡¨ç¤ºæœ‰é‡å¤å…ƒç´ ï¼Œå½“å‰ä»¥s[i]å¼€å¤´çš„å­ä¸²å·²è¾¾åˆ°æœ€å¤§é•¿åº¦ï¼Œ
+    // æ­¤æ—¶å°†setä¸­çš„set[i]åˆ é™¤ï¼Œi++ï¼Œå³å³ç§»ä¸€ä½
+    int lengthOfLongestSubstring2(string s) {
+        set<char> substr_set;
+        int s_len = s.length();
+        int i = 0, res = 0, j = 0;
+        while(i < s_len && j < s_len) {
+            if(substr_set.find(s[j]) == substr_set.end()) {     // å¦‚æœsetä¸­æ²¡æœ‰åŒ…å«s[j]ï¼Œå°†å…¶æ’å…¥setä¸­
+                substr_set.insert(s[j++]);
+                res = max(res, j - i);
+            } else {                                            //  å¦‚æœs[j]å·²å­˜åœ¨setä¸­ï¼Œåˆ é™¤s[i]ï¼Œi++
+                substr_set.erase(s[i++]);
+            }
         }
-		return res;
+
+        return res;
     }
-    
+
+    // æ–¹æ³•3ï¼Œæ»‘åŠ¨çª—å£2
+    // ä½¿ç”¨ä¸€ä¸ªmapå­˜å‚¨å½“å‰å­ä¸²ï¼Œä»¥åŠå­ä¸²ä¸­æ¯ä¸€ä¸ªå­—ç¬¦åœ¨sä¸­çš„ç´¢å¼•ï¼ˆä¸‹æ ‡ï¼‰çš„ä¸‹ä¸€ä½
+    // å½“s[j]å­˜åœ¨äºmapä¸­æ—¶ï¼Œå½“å‰ä»¥s[i]å¼€å¤´çš„å­ä¸²å·²è¾¾æœ€å¤§é•¿åº¦ï¼Œ
+    // i ç›´æ¥è·³åˆ°mapä¸­ä¸s[j]ä¸€æ ·çš„å­—ç¬¦çš„ä¸‹æ ‡çš„ä¸‹ä¸€ä½
+    int lengthOfLongestSubstring3(string s) {
+        map<char, int> substr_map;                                  // è®°å½•å­ä¸²å­—ç¬¦ä»¥åŠå­—ç¬¦çš„ç´¢å¼•ï¼ˆä¸‹æ ‡ï¼‰çš„ä¸‹ä¸€ä½
+        int s_len = s.length();
+        int i = 0, res = 0, j = 0;
+        for( ; j < s_len; j++) {
+            map<char, int>::iterator iter = substr_map.find(s[j]);  // æŸ¥æ‰¾å­—ç¬¦ s[j] æ˜¯å¦å·²åœ¨å­ä¸²ä¸­ï¼Œå³mapä¸­
+            if( iter != substr_map.end()) {                         // è‹¥åœ¨ï¼Œè¡¨ç¤ºå­—ç¬¦é‡å¤
+                i = max(iter->second, i);                           // é‡å¤å­—ç¬¦ä¸‹ä¸€ä¸ªä½ç½®å’Œå½“å‰iæ¯”è¾ƒï¼Œé˜²æ­¢ i å¾€å›è·³
+                substr_map[s[j]] = j + 1;   	                    // æ›´æ–°é‡å¤å­—ç¬¦s[j]çš„ä½ç½®ç´¢å¼•ï¼Œå–é åçš„ä½ç½®ã€‚ è¿™ä¸¤è¡Œå®ç°äº†ä¸éœ€è¦åˆ é™¤mapä¸­è·³è¿‡çš„å­—ç¬¦
+            }else{
+                substr_map.insert( pair<char, int>(s[j], j + 1 ) ); // è‹¥ä¸é‡å¤ï¼Œæ’å…¥s[j]åŠå…¶ç´¢å¼•çš„ä¸‹ä¸€ä½
+            }
+            res = max(res, j - i + 1);                              // æ›´æ–°æœ€é•¿æ— é‡å¤å­ä¸²çš„é•¿åº¦
+        }
+        return res;
+    }
+
+    // æ–¹æ³•4ï¼Œå­—ç¬¦é›†
+    // æ€è·¯å’Œä¼˜åŒ–ç‰ˆæ»‘åŠ¨çª—å£ç±»ä¼¼  ï¼Œä½¿ç”¨æ•°ç»„ index å­˜å‚¨æ‰€æœ‰å­—ç¬¦åœ¨ s ä¸­çš„ç´¢å¼•çš„ä¸‹ä¸€ä½ç½®
+    // åˆšå¼€å§‹ index[s[j]] éƒ½ä¸º0ï¼Œ i ä¹Ÿä¸€ç›´ä¸º0ï¼Œ å½“å‡ºç°é‡å¤å…ƒç´ æ—¶ï¼Œ i ç›´æ¥è·³åˆ°é‡å¤å…ƒç´ å½“å‰å­˜åœ¨indexæ•°ç»„ä¸­çš„ä¸‹æ ‡ä½ç½®ã€‚
+    int lengthOfLongestSubstring4(string s) {
+        int s_len = s.length();
+        int index[128] = {0};
+        int i = 0, res = 0, j = 0;
+        for( ; j < s_len; j++) {            // éå† s å­—ç¬¦ä¸²
+            i   = max(index[s[j]], i);      // æ›´æ–° i ï¼Œå½“æ²¡é‡åˆ°é‡å¤å…ƒç´ æ—¶ï¼Œi ä¸€ç›´ä¿æŒä¸å˜ã€‚
+            res = max(res, j - i + 1);
+            index[s[j]] = j + 1;
+        }
+        return res;
+    }
+
 };
-int main(){
-	Solution a;
-	string s = " ";//"abcdaefghaij";
-	cout << a.lengthOfLongestSubstring4(s);
-	return 0;
-} 
+int main() {
+    Solution a;
+    string s = "tmmzuxt";//"abcdaefghaij";
+    cout << a.lengthOfLongestSubstring3(s) << " " << a.lengthOfLongestSubstring2(s);
+    return 0;
+}
