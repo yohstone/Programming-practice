@@ -5,70 +5,73 @@
 using namespace std;
 class Solution {
 public:
-    //·½·¨2£¬Á½¸öÓĞĞòÊı×éÇóÖĞÎ»Êı£¬ÎÊÌâÒ»°ã»¯Îª£¬ÇóÁ½¸öÓĞĞòÊı×éºÏ²¢ºóµÄµÚk¸öÊı£¬µ±k = (m+n)/2Ê±ÎªÔ­ÎÊÌâµÄ½â¡£
-    //Òò´Ë·Ö±ğÇó³öµÚÒ»¸öÊı×éAºÍµÚ¶ş¸öÊı×éBµÄµÚk/2¸öÊıaºÍb£¬È»ºó±È½ÏaºÍb£¬µ±a<b, ËµÃ÷µÚk¸öÊıÎ»ÓÚAÊı×éµÄµÚk/2¸öÊıºó°ë¶Î£¬
-    //»òÕßBÊı×éµÄµÚk/2¸öÊıÇ°°ë¶Î£¬ÎÊÌâ¹æÄ£ËõĞ¡ÁËÒ»°ë£¬È»ºóµİ¹é´¦Àí¡£ Ê±¼ä¸´ÔÓ¶ÈÊÇ O(log(m+n))
+    // æ–¹æ³•2ï¼Œä¸¤ä¸ªæœ‰åºæ•°ç»„æ±‚ä¸­ä½æ•°ï¼Œé—®é¢˜ä¸€èˆ¬åŒ–ä¸ºï¼Œæ±‚ä¸¤ä¸ªæœ‰åºæ•°ç»„åˆå¹¶åçš„ç¬¬ k ä¸ªæ•°ï¼Œå½“ k = (m+n)/2 æ—¶ä¸ºåŸé—®é¢˜çš„è§£ã€‚
+    // å› æ­¤åˆ†åˆ«æ±‚å‡ºç¬¬ä¸€ä¸ªæ•°ç»„ A å’Œç¬¬äºŒä¸ªæ•°ç»„ B çš„ç¬¬ k/2 ä¸ªæ•° a å’Œ bï¼Œç„¶åæ¯”è¾ƒ a å’Œ bï¼Œå½“ a < b, è¯´æ˜ç¬¬ k ä¸ªæ•°ä½äº A æ•°ç»„çš„ç¬¬ k/2 ä¸ªæ•°ååŠæ®µï¼Œ
+    // æˆ–è€… B æ•°ç»„çš„ç¬¬ k/2 ä¸ªæ•°å‰åŠæ®µï¼Œé—®é¢˜è§„æ¨¡ç¼©å°äº†ä¸€åŠï¼Œç„¶åé€’å½’å¤„ç†ã€‚ æ—¶é—´å¤æ‚åº¦æ˜¯ O(log(m+n))
     double findMedianSortedArrays2(vector<int>& nums1, vector<int>& nums2) {
-    	int m = nums1.size(), n = nums2.size();
-        int mid1 = (m + n + 1)/2, mid2 = (m + n + 2)/2;
-        //¿¼ÂÇµ½×ÜÊıµÄÆæÅ¼ĞÔ£¬±È½ÏÕâÁ½¸öÊı£¬Èômid1 == mid2Ôò×ÜÊıÎªÆæÊıÖ»Ğè²éÕÒµÚ(m + n + 1)/2¸öÊı£¬·ñÔòĞèÒªÈ¡ÖĞ¼äÁ©ÊıµÄÆ½¾ùÊı×÷ÎªÖĞÎ»Êı
+        int m = nums1.size(), n = nums2.size();
+        int mid1 = (m + n + 1) / 2, mid2 = (m + n + 2) / 2;
+        // è€ƒè™‘åˆ°æ€»æ•°çš„å¥‡å¶æ€§ï¼Œæ¯”è¾ƒè¿™ä¸¤ä¸ªæ•°ï¼Œè‹¥ mid1 == mid2 åˆ™æ€»æ•°ä¸ºå¥‡æ•°åªéœ€æŸ¥æ‰¾ç¬¬ (m + n + 1)/2 ä¸ªæ•°ï¼Œå¦åˆ™éœ€è¦å–ä¸­é—´ä¿©æ•°çš„å¹³å‡æ•°ä½œä¸ºä¸­ä½æ•°
         if (mid1 == mid2)
-            return findKth(nums1, 0, nums2, 0, mid1)/1.0;
+            return findKth(nums1, 0, nums2, 0, mid1) / 1.0;
         else
-            return (findKth(nums1, 0, nums2, 0, mid1) + findKth(nums1, 0, nums2, 0, mid2))/2.0;
+            return (findKth(nums1, 0, nums2, 0, mid1) + findKth(nums1, 0, nums2, 0, mid2)) / 2.0;
     }
 
-    //Ñ°ÕÒµÚk¸öÊı
+    // å¯»æ‰¾ç¬¬ k ä¸ªæ•°
     int findKth(vector<int>& nums1, int begin1, vector<int>& nums2, int begin2, int k) {
-        //µ±begin1»òbegin2³¬¹ıÊı×é³¤¶È£¬Ôò´ËÊ±µÚk¸öÊıÎªÁíÒ»¸öÊı×éµÄµÚk¸öÊı
-        if (begin1 >= nums1.size()) return nums2[begin2 + k - 1];
-        if (begin2 >= nums2.size()) return nums1[begin1 + k - 1];
-        //µ±kÎª1Ê±£¬nums1ºÍnum2ÖĞ×îĞ¡µÄÄÇ¸öÊıÎªµÚ1¸öÊı
-        if (k == 1) return min(nums1[begin1], nums2[begin2]);
-        //·Ö±ğ²éÕÒÕâÁ½¸öÊı×éµÄµÚ k/2 ¸öÔªËØ
-        //Èç¹ûÊı×é1µÄµÚk/2¸öÊıĞ¡ÓÚÊı×é2µÄµÚk/2¸öÊı£¬±íÊ¾×ÜµÄµÚk¸öÊıÎ»ÓÚÊı×é1µÄµÚk/2¸öÊıµÄºó°ë¶Î£¬»òÕßÊÇÊı×é2µÄµÚk/2¸öÊıµÄÇ°°ë¶Î
-        //Èç¹ûÊı×é1µÄµÚk/2¸öÊı´óÓÚµÈÓÚÊı×é2µÄµÚk/2¸öÊı£¬±íÊ¾×ÜµÄµÚk¸öÊıÎ»ÓÚÊı×é1µÄµÚk/2¸öÊıµÄÇ°°ë¶Î£¬»òÕßÊÇÊı×é2µÄµÚk/2¸öÊıµÄºó°ë¶Î
-        //ÓÉÓÚ·¶Î§ËõĞ¡ÁËk/2¸öÊı£¬´ËÊ±×ÜµÄµÚk¸öÊıÊµ¼ÊÉÏµÈÓÚĞÂµÄ·¶Î§ÄÚµÄµÚk-(k/2)¸öÊı£¬ÒÀ´Îµİ¹é
-        int mid1 = (begin1 + k/2 -1) < nums1.size() ? nums1[begin1 + k/2 -1] : INT_MAX;
-        int mid2 = (begin2 + k/2 -1) < nums2.size() ? nums2[begin2 + k/2 -1] : INT_MAX;
+        // å½“ begin1 æˆ– begin2 è¶…è¿‡æ•°ç»„é•¿åº¦ï¼Œåˆ™æ­¤æ—¶ç¬¬ k ä¸ªæ•°ä¸ºå¦ä¸€ä¸ªæ•°ç»„çš„ç¬¬ k ä¸ªæ•°
+        if (begin1 >= nums1.size())
+            return nums2[begin2 + k - 1];
+        if (begin2 >= nums2.size())
+            return nums1[begin1 + k - 1];
+        // å½“ k ä¸º 1 æ—¶ï¼Œnums1 å’Œnum2 ä¸­æœ€å°çš„é‚£ä¸ªæ•°ä¸ºç¬¬ 1 ä¸ªæ•°
+        if (k == 1)
+            return min(nums1[begin1], nums2[begin2]);
+        // åˆ†åˆ«æŸ¥æ‰¾è¿™ä¸¤ä¸ªæ•°ç»„çš„ç¬¬ k/2 ä¸ªå…ƒç´ 
+        // å¦‚æœæ•°ç»„1 çš„ç¬¬ k/2 ä¸ªæ•°å°äºæ•°ç»„2 çš„ç¬¬ k/2 ä¸ªæ•°ï¼Œè¡¨ç¤ºæ€»çš„ç¬¬ k ä¸ªæ•°ä½äºæ•°ç»„1 çš„ç¬¬ k/2 ä¸ªæ•°çš„ååŠæ®µï¼Œæˆ–è€…æ˜¯æ•°ç»„2 çš„ç¬¬ k/2 ä¸ªæ•°çš„å‰åŠæ®µ
+        // å¦‚æœæ•°ç»„1 çš„ç¬¬ k/2 ä¸ªæ•°å¤§äºç­‰äºæ•°ç»„2 çš„ç¬¬ k/2 ä¸ªæ•°ï¼Œè¡¨ç¤ºæ€»çš„ç¬¬ k ä¸ªæ•°ä½äºæ•°ç»„1 çš„ç¬¬ k/2 ä¸ªæ•°çš„å‰åŠæ®µï¼Œæˆ–è€…æ˜¯æ•°ç»„2 çš„ç¬¬ k/2 ä¸ªæ•°çš„ååŠæ®µ
+        // ç”±äºèŒƒå›´ç¼©å°äº† k/2 ä¸ªæ•°ï¼Œæ­¤æ—¶æ€»çš„ç¬¬ k ä¸ªæ•°å®é™…ä¸Šç­‰äºæ–°çš„èŒƒå›´å†…çš„ç¬¬ k-(k/2) ä¸ªæ•°ï¼Œä¾æ¬¡é€’å½’
+        int mid1 = (begin1 + k / 2 - 1) < nums1.size() ? nums1[begin1 + k / 2 - 1] : INT_MAX;
+        int mid2 = (begin2 + k / 2 - 1) < nums2.size() ? nums2[begin2 + k / 2 - 1] : INT_MAX;
         if (mid1 < mid2)
-            return findKth(nums1, begin1 + k/2, nums2, begin2, k - k/2);
+            return findKth(nums1, begin1 + k / 2, nums2, begin2, k - k / 2);
         else
-            return findKth(nums1, begin1, nums2, begin2 + k/2, k - k/2);
+            return findKth(nums1, begin1, nums2, begin2 + k / 2, k - k / 2);
     }
-    //·½·¨1£¬½«Á©ÓĞĞòÊı×énums1Óënums2ºÏ²¢£¬È»ºóÖ±½ÓÇóÖĞÎ»Êı£¬¸´ÔÓ¶ÈÎªO(m+n+1)£¬¼´O(m+n)
+    // æ–¹æ³•1ï¼Œå°†ä¿©æœ‰åºæ•°ç»„nums1ä¸nums2åˆå¹¶ï¼Œç„¶åç›´æ¥æ±‚ä¸­ä½æ•°ï¼Œå¤æ‚åº¦ä¸ºO(m+n+1)ï¼Œå³O(m+n)
     double findMedianSortedArrays1(vector<int>& nums1, vector<int>& nums2) {
-    	int index2=0;
-    	vector<int> nums3(0);
-    	double median=0;
-    	int m_index=0;
-    	//ºÏ²¢Êı×éµ½nums3
-        for(int index1=0; index1<nums1.size();){
-        	if( index2 >= nums2.size() || nums1[index1] <= nums2[index2]){
-        		nums3.push_back(nums1[index1]);
-        		index1++;
-			}else{
-				nums3.push_back(nums2[index2]);
-				index2++;
-			}
-		}
-		for(; index2<nums2.size(); index2++){
-			nums3.push_back(nums2[index2]);
-		}
-		//¼ÆËãÓĞĞòÊı×énums3µÄÖĞÎ»Êı
-		m_index = floor(nums3.size()/2);
-		if(nums3.size() % 2 == 1){
-			median = nums3[ m_index ]/1.0;
-		}else{
-			median = double((nums3[ m_index ] + nums3[ m_index-1 ] )/2.0 );
-		}
-		return median;
+        int index2 = 0;
+        vector<int> nums3(0);
+        double median = 0;
+        int m_index = 0;
+        // åˆå¹¶æ•°ç»„åˆ°nums3
+        for(int index1 = 0; index1 < nums1.size();) {
+            if( index2 >= nums2.size() || nums1[index1] <= nums2[index2]) {
+                nums3.push_back(nums1[index1]);
+                index1++;
+            } else {
+                nums3.push_back(nums2[index2]);
+                index2++;
+            }
+        }
+        for(; index2 < nums2.size(); index2++) {
+            nums3.push_back(nums2[index2]);
+        }
+        // è®¡ç®—æœ‰åºæ•°ç»„nums3çš„ä¸­ä½æ•°
+        m_index = floor(nums3.size() / 2);
+        if(nums3.size() % 2 == 1) {
+            median = nums3[ m_index ] / 1.0;
+        } else {
+            median = double((nums3[ m_index ] + nums3[ m_index - 1 ] ) / 2.0 );
+        }
+        return median;
     }
 };
-int main(){
-	Solution s ;
-	vector<int> nums1 = {1,3};
-	vector<int> nums2 = {2};
-	cout << s.findMedianSortedArrays2(nums1, nums2) << endl;
-	return 0;
+int main() {
+    Solution s ;
+    vector<int> nums1 = {1,3,4,5};
+    vector<int> nums2 = {2};
+    cout << s.findMedianSortedArrays1(nums1, nums2) << endl;
+    return 0;
 }
