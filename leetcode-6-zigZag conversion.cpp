@@ -27,11 +27,10 @@ public:
             return s;
         }
         int currRow = 0;
-        bool goingDown = false; // 方向标志位 true：方向向下，行+1； false：方向斜向上，行-1
-        vector<string> convertArr(min(numRows, sLen)); // 使用min防止有空行
+        bool goingDown = false;                             // 方向标志位 true：方向向下，行+1； false：方向斜向上，行-1
+        vector<string> convertArr(min(numRows, sLen));      // 使用min防止有空行
 
-        // 以Z字形将字符串放入vector容器中
-        for(int i = 0; i < sLen; i++ ){
+        for(int i = 0; i < sLen; i++ ){                     // 以Z字形将字符串放入vector容器中
             convertArr[currRow] += s[i];
             cout << convertArr[currRow] << endl;
             if( currRow == numRows-1 || currRow == 0 ){
@@ -66,15 +65,13 @@ public:
         for(int currRow = 0; currRow < numRows; currRow++){
             int interval;
             int firstInterval = (2 * numRows - 2) - 2 * currRow; // 避免重复计算
-            int secondInterval = 2 * currRow;  // 避免重复计算
-            bool isFirst = true; // 用于区分interval取何值，true：取firstInterval; false：取secondInterval;
+            int secondInterval = 2 * currRow;                    // 避免重复计算
+            bool isFirst = true;                                 // 用于区分interval取何值，true：取firstInterval; false：取secondInterval;
             int index = currRow;
 
             while( index < sLen ){
                 interval = isFirst ? firstInterval : secondInterval;
-
-                // 跳过首尾两行有个interval为0的情况
-                if( interval == 0 ){
+                if( interval == 0 ){                             // 跳过首尾两行有个interval为0的情况
                     isFirst = !isFirst;
                     continue;
                 }
