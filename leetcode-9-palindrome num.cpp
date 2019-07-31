@@ -42,7 +42,7 @@ public:
 
     // 方法2，反转x的一半，判断反转后的数与原数剩下一半是否相等 , 8ms 打败97%
     bool isPalindrome2(int x) {
-		long long res = 0;                        // 用于存储翻转后的结果数，longlong防止翻转后溢出
+		int res = 0;                              // 用于存储翻转后的结果数，longlong防止翻转后溢出
         if(x < 0 || (x % 10 == 0 && x != 0) ){    // 负数和个位是 0 的数都不是回文数
             return false;
         }
