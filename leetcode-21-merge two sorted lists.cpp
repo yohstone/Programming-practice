@@ -16,7 +16,7 @@ Output: 1->1->2->3->4->4
  };
 class Solution {
 public:
-    //方法1
+    //方法1，迭代实现 时间复杂度 O(n+m) 8ms 92%
     ListNode* mergeTwoLists1(ListNode* l1, ListNode* l2) {
         ListNode *t = new ListNode(0);
         ListNode *new_list = t;
@@ -36,7 +36,7 @@ public:
             t->next = l2;
         return new_list->next;
     }
-    //方法2 递归
+    //方法2 递归，时间复杂度 O(n+m) 12ms 86%
     ListNode* mergeTwoLists2(ListNode* l1, ListNode* l2){
         if(l1 == NULL) return l2;
         if(l2 == NULL) return l1;
