@@ -19,7 +19,7 @@ public:
     //方法1
     ListNode* mergeTwoLists1(ListNode* l1, ListNode* l2) {
         ListNode *t = new ListNode(0);
-        ListNode *newList = t;
+        ListNode *new_list = t;
         while( l1 && l2 ){
             if( l1->val <= l2->val ){
                 t->next = l1;
@@ -34,7 +34,7 @@ public:
             t->next = l1;
         if(l2 != NULL)
             t->next = l2;
-        return newList->next;
+        return new_list->next;
     }
     //方法2 递归
     ListNode* mergeTwoLists2(ListNode* l1, ListNode* l2){
