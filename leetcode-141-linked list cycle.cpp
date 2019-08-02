@@ -32,29 +32,37 @@ public:
         }
         return false;
     }
+
     // 方法2：双指针法，使用快慢指针进行遍历
     bool hasCycle2(ListNode *head){
-        if(head == NULL || head->next == NULL) return false;
+        if(head == NULL || head->next == NULL){
+            return false;
+        }
         ListNode *slow = head;
         ListNode *fast = head->next;
-        // 若不存在环，快指针会最先到达链表尾部
         while( slow != fast){
-            if(fast == NULL || fast->next == NULL) return false;
+            if(fast == NULL || fast->next == NULL){  // 若不存在环，快指针会最先到达链表尾部
+                return false;
+            }
             slow = slow->next;
             fast = fast->next->next;
         }
         return true;
     }
 
-    // 方法3：先反转链表，然后比较头指针是否相等，相等则有环
+    // 方法3：先反转链表，然后比较头指针是否相等，相等则有环，因为若有环，头结点会被反转两次，从何与原来一样
     bool hasCycle3(ListNode *head){
-        if(head == NULL || head->next == NULL) return false;
-        ListNode *tempHead = head;
-        head = reverseList(head);
-        if( head == tempHead ) return true;
-        else
+        if(head == NULL || head->next == NULL){
             return false;
-
+        }
+        ListNode *head_temp = head;                 // 先存下原链表的头指针
+        head = reverseList(head);                   // 反转链表
+        if( head == head_temp ){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     // 迭代反转链表
     ListNode* reverseList(ListNode* head) {
