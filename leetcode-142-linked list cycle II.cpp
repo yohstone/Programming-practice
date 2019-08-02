@@ -38,7 +38,7 @@ struct ListNode {
 
 class Solution {
 public:
-    // 方法1： 使用哈希表的唯一性存下每个遍历的结点，当遇到相同的结点时该结点为入口直接返回
+    // 方法1： 使用哈希表的唯一性存下每个遍历过的结点，当再次遇到同一结点时该结点为入口直接返回
     // 时间复杂度 O(n) 空间复杂度 O(n) 最快28ms，打败24%
     ListNode *detectCycle(ListNode *head) {
         set<ListNode*> visited;                         // 已访问过的结点
@@ -56,7 +56,7 @@ public:
     // 方法2：使用快慢指针，若存在环，设非环结点为 a 个，环内的结点为 b 个，
     // 则俩指针第一次相遇时快指针已在环内走了 kb + c 步 （ k = 1,2... ，0 <= c < b），且相遇点距入环处有 b - c 个结点
     // 由公式：2 * 慢指针的路程 = 快指针的路程， 可得： 2 * (a + c) = a + kb + c，
-    // 化简得 a = (k - 1)b + (b - c)，所以，设两个速度相同的指针同时从快慢指针第一次相遇的结点出发，他们最终会相遇于环入口结点。
+    // 化简得 a = (k - 1)b + (b - c)，所以，设两个速度相同的指针分别同时从快慢指针第一次相遇的结点和链表头结点出发，他们最终会相遇于环入口结点。
     // 时间复杂度 O(n) 空间复杂度 O(1) 最快 16ms，打败78%
     ListNode *detectCycle2(ListNode *head) {
         if(head == NULL){
@@ -74,7 +74,7 @@ public:
         return p1;
     }
 
-    // 使用快慢指针进行遍历链表，判断是否有环，有则返回快慢指针的相遇结点
+    // 使用快慢指针遍历链表，判断是否有环，有则返回快慢指针的相遇结点
     ListNode* hasCycle(ListNode *head){
         ListNode *slow = head;
         ListNode *fast = head;
