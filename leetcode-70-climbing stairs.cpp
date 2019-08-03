@@ -15,35 +15,42 @@ Explanation: There are two ways to climb to the top.
 **/
 class Solution {
 public:
-    //·½·¨1£º×éºÏÊýÑ§ì³²¨ÄÇÆõÍ¨Ïî¹«Ê½·¨
-    int climbStairs(int n){
+    //æ–¹æ³•1ï¼šç»„åˆæ•°å­¦æ–æ³¢é‚£å¥‘é€šé¡¹å…¬å¼æ³•ï¼š a_n = ( ((1+âˆš5)/2)^n - ((1-âˆš5)/2)^n )/ âˆš5 ã€‚
+    int climbStairs(int n) {
         double f = sqrt(5);
         int res;
-        res = int( (pow((1+f)/2, n+1) - pow( (1-f)/2, n+1) )/ f + 0.5) ;
+        res = int( (pow((1 + f) / 2, n + 1) - pow( (1 - f) / 2, n + 1) ) / f + 0.5) ;
         return res;
     }
-    //·½·¨2£ºµÝ¹é·½·¨£¬Ê±¼ä¸´ÔÓ¶ÈÌ«¸ß
+
+    //æ–¹æ³•2ï¼šé€’å½’æ–¹æ³•ï¼Œæ—¶é—´å¤æ‚åº¦å¤ªé«˜
     int climbStairs2(int n) {
-        if(n == 1) return 1;
-        if(n == 2) return 2;
-        return climbStairs2(n-1) + climbStairs2(n-2);
+        if(n == 1) {
+            return 1;
+        }
+        if(n == 2) {
+            return 2;
+        }
+        return climbStairs2(n - 1) + climbStairs2(n - 2);
     }
-    //·½·¨3£ºÓÃÊý×é´æ´¢ì³²¨ÄÇÆõÊýÁÐ
+    //æ–¹æ³•3ï¼šç”¨æ•°ç»„å­˜å‚¨æ–æ³¢é‚£å¥‘æ•°åˆ—
     int climbStairs3(int n) {
-        int f[n+1];
+        int f[n + 1];
         f[1] = 1;
-        if(n>1) f[2] = 2;
-        for(int i=3;i<=n; i++){
-            f[i] = f[i-1] + f[i-2];
+        if(n > 1){
+            f[2] = 2;
+        }
+        for(int i = 3; i <= n; i++) {
+            f[i] = f[i - 1] + f[i - 2];
         }
         return f[n];
     }
 };
-int main(){
+int main() {
     Solution s;
     int n;
-    while(cin >> n){
-        cout << s.climbStairs3(n)<< endl;
+    while(cin >> n) {
+        cout << s.climbStairs3(n) << endl;
     }
     return 0;
 }
