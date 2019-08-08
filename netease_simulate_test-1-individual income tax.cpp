@@ -21,7 +21,7 @@ int calTax(int income, map<int, double> &taxs){
     int res = 0;
     map<int, double>::iterator iter_cur  = taxs.begin();      // 当前区间迭代器
     map<int, double>::iterator iter_next = ++taxs.begin();    // 下一区间迭代器，用于取得下一区间的起始值
-    for(; iter_cur != taxs.end(); iter_cur++, iter_next++){
+    for(; iter_cur != taxs.end(); iter_cur++, iter_next++){   // 遍历汇率表计算当前收入应缴纳的税
         if(income - iter_cur->first <= 0){
             break;
         }else{

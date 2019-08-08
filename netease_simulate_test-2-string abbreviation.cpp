@@ -12,6 +12,7 @@ using namespace std;
  * 当时 str[i] + 1 != str[i + 1] 时, 若 sub_str.size() >= 3，则可以拼接出"首个字母-结束字母"的形式，若count < 3，则还是以原来的序列添加到结果字符串中
  */
 
+// 压缩字符串函数，返回缩写后的字符串
 string compressString(string str){
     int len = str.size();
     if(len < 4){
@@ -32,13 +33,12 @@ string compressString(string str){
             sub_str = "";   // 初始化
         }
     }
-    // 因为 str[len - 1] 尚未遍历，所以还需再判断一次
-    if(sub_str.size() >= 3 && str[i - 1] + 1 == str[i]){
+
+    if(sub_str.size() >= 3 && str[i - 1] + 1 == str[i]){  // 因为 str[len - 1] 尚未遍历，所以还需再判断一次
         res = res + sub_str[0] + "-" + str[i];
     }else{
         res = res + sub_str + str[i];
     }
-
     return res;
 }
 

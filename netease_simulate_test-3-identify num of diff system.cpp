@@ -21,11 +21,10 @@ long long kToDec(int k, string str){
             res = res * k + (str[i] - '0');
         }
     }
-    cout << str << " " << res << endl;
     return res;
-
 }
 
+// 识别数字函数，返回识别结果
 long long identifyNum(int x, int y, string str){
     int len  = str.size();
     int left = 0;
