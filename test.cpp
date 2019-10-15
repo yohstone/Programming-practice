@@ -1,23 +1,45 @@
-#include<stdio.h>
-#include<math.h>>
-int main(){
-	int n = 7744; 
-	double a ;
-	int b=15;
-	int count =0;
-	//printf("%d %d %d\n", count++, count++, count++);
-	count = count++;
-	printf("%d\n", count);
-	//scanf("%d%c", &a,&b);
-	a = sqrt(n);
-//	printf("%lf",a);
-	printf("%d ", !b);
-	 
-//	if(floor(a+0.5) == a){
-//		printf("true");
-//	}else{
-//		printf("false");
-//	}
-	//printf("%.18lf\n",0.1234567890123456789);
-	return 0;
+#include <iostream>
+using namespace std;
+
+typedef struct LinkListNode{
+    int data;
+    LinkListNode* next;
+    LinkListNode(int x):data(x),next(nullptr){}
+}LinkList;
+LinkListNode* reverseDoubleNode(LinkListNode* head){
+    if(head == nullptr){
+        return head;
+    }
+    LinkListNode* dummyHead = new LinkListNode(0);
+    dummyHead->next = head;
+    LinkListNode* cur = head;
+    LinkListNode* pre = dummyHead;
+    while(cur != nullptr){
+        LinkListNode* temp = cur->next->next;
+        cur->next->next = cur;
+        pre->next = cur->next;
+        cur->next = temp;
+        pre = cur;
+        cur = temp;
+    }
+    return dummyHead->next;
+}
+int main() {
+    int nums[] = {1,2,3,4};
+    LinkListNode* head = new LinkListNode(0);
+    LinkListNode* p = head;
+
+    for(int i = 0; i < 4; i++){
+        LinkListNode* newNode = new LinkListNode(nums[i]);
+        p->next = newNode;
+        p = newNode;
+        //cout << p->data << ' ';
+    }
+    LinkListNode* newHead = reverseDoubleNode(head->next);
+
+    while(newHead != nullptr){
+        cout << newHead->data << ' ';
+        newHead = newHead->next;
+    }
+    cout << "Hello World!" << endl;
 }
