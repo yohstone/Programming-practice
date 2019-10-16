@@ -65,6 +65,22 @@ public:
         if(root == nullptr){
             return false;
         }
+        stack<pair<TreeNode *, int> > treeStack;
+        treeStack.push({root, sum});
+        while(!treeStack.empty()){
+            TreeNode* curNode = treeStack.top();
+            treeStack.pop();
+            if(curNode.left == nullptr && curNode.right == nullptr){ // 当前节点是叶子节点
+                if(sum - curNode.val == 0){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+            if(curNode.left != nullptr){
+                treeStack.push({curNode.left, sum - curNode.val});
+            }
+        }
         
     }
 };
