@@ -60,28 +60,29 @@ public:
         return hasPathSum(root->left, sum) || hasPathSum(root->right, sum);
     }
     
-    // 方法2：迭代法
-    bool hasPathSum(TreeNode* root, int sum) {
+    // 方法2：迭代法，使用一个栈来仿照递归实现中系统维护的栈，即迭代法是类似 我们自己维护递归中系统维护的栈
+    bool hasPathSum2(TreeNode* root, int sum) {
         if(root == nullptr){
             return false;
         }
         stack<pair<TreeNode *, int> > treeStack;
         treeStack.push({root, sum});
         while(!treeStack.empty()){
-            TreeNode* curNode = treeStack.top();
+            auto &currPair = treeStack.top();
+            auto currNode = currPair.first;
+            auto currSum  = currPair.second;
             treeStack.pop();
-            if(curNode.left == nullptr && curNode.right == nullptr){ // 当前节点是叶子节点
-                if(sum - curNode.val == 0){
-                    return true;
-                }else{
-                    return false;
-                }
+            if(currNode->left == nullptr && currNode->right == nullptr && currSum == currNode->val ){ // 当前节点是叶子节点，且满足要求
+                return true;
             }
-            if(curNode.left != nullptr){
-                treeStack.push({curNode.left, sum - curNode.val});
+            if(currNode->left != nullptr){  // 非叶子节点且有左子节点，将其加入栈中
+                treeStack.push({currNode->left, currSum - currNode->val});
+            }
+            if(currNode->right != nullptr){ // 非叶子节点且有右子节点，将其加入栈中
+                treeStack.push({currNode->right, currSum - currNode->val});
             }
         }
-        
+        return false;
     }
 };
 int main(){
