@@ -42,38 +42,51 @@
 using namespace std;
 class Solution {
 public:
-//    const long long MAX = 2147483648;
-//    // 方法1：
-//    int divide(int dividend, int divisor) {
-//        if(divisor == 1 || dividend == 0) return 1;
-//
-//        long long res = 0;
-//        bool isMinus = false; // 结果是否是负数标记
-//        if(dividend < 0 && divisor < 0){
-//            isMinus = false;
-//        }else if(dividend < 0 || divisor < 0){
-//            isMinus = true;
-//        }
-//        long long dividend_temp = abs(dividend);
-//        long long divisor_temp = abs(divisor);
-//        while(dividend_temp >= divisor_temp){
-//            ++res;
-//            dividend_temp = dividend_temp - divisor_temp;
-//        }
-//        if(res > MAX - 1 || -res < -MAX){
-//            return MAX - 1;
-//        }
-//        return isMinus ? -res : res;
-//    }
+    // 方法1：用减法求商，时间复杂度太大，没有AC
+    int divide(int dividend, int divisor) {
+        if( dividend == 0) return 0;
+        if(divisor == 1) return dividend;
+
+        long long res = 0;
+        bool isMinus = false; // 结果是否是负数标记
+
+        if(dividend < 0 && divisor < 0){
+            isMinus = false;
+        }else if(dividend < 0 || divisor < 0){
+            isMinus = true;
+        }
+        unsigned int dividend_temp = dividend == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(dividend);
+        unsigned int divisor_temp = divisor == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(divisor);
+
+        while(dividend_temp >= divisor_temp){  // 求无符号的商
+            ++res;
+            dividend_temp = dividend_temp - divisor_temp;
+
+        }
+
+        if(res > INT_MAX || -res < INT_MIN){
+            return INT_MAX;
+        }
+
+        return isMinus ? -res : res;
+    }
 
     // 方法2：列竖式求除法，除数 divisor 左移直到大于被除数 dividend
     int divide(int dividend, int divisor) {
-        if(dividend == INT_MIN && divisor == -1)
-            return INT_MAX;
-        int sign = (dividend ^ divisor) >= 0 ? 1 : -1;
+        if( dividend == 0) return 0;
+        if(divisor == 1) return dividend;
+
+        long long res = 0;
+        bool isMinus = false; // 结果是否是负数标记
+
+        if(dividend < 0 && divisor < 0){
+            isMinus = false;
+        }else if(dividend < 0 || divisor < 0){
+            isMinus = true;
+        }
         unsigned int dividend_temp = dividend == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(dividend);
         unsigned int divisor_temp = divisor == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(divisor);
-        unsigned int res = 0;
+
         while(dividend_temp >= divisor_temp){
             unsigned int temp = divisor_temp, mask = 1;
             while(temp && dividend_temp >= temp){
@@ -83,9 +96,12 @@ public:
                 temp <<= 1;
             }
         }
-        if(sign == -1)
-            res = ~(int)(res - 1);
-        return res;
+
+        if(res > INT_MAX || -res < INT_MIN){
+            return INT_MAX;
+        }
+
+        return isMinus ? -res : res;
     }
 };
 int main(){
