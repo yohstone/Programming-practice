@@ -42,7 +42,7 @@
 using namespace std;
 class Solution {
 public:
-    // 方法1：用减法求商，时间复杂度太大，没有AC
+    // 方法1：用减法求商，当被除数大于等于除数时，每次减去一个除数，时间复杂度太大，超时，没有AC
     int divide(int dividend, int divisor) {
         if( dividend == 0) return 0;
         if(divisor == 1) return dividend;
@@ -50,21 +50,20 @@ public:
         long long res = 0;
         bool isMinus = false; // 结果是否是负数标记
 
-        if(dividend < 0 && divisor < 0){
+        if(dividend < 0 && divisor < 0){ // 判断商的正负号
             isMinus = false;
         }else if(dividend < 0 || divisor < 0){
             isMinus = true;
         }
-        unsigned int dividend_temp = dividend == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(dividend);
-        unsigned int divisor_temp = divisor == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(divisor);
+        unsigned int dividend_positive = dividend == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(dividend); // 将被除数转换成正数
+        unsigned int divisor_positive = divisor == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(divisor);    // 将除数转换成正数
 
-        while(dividend_temp >= divisor_temp){  // 求无符号的商
+        while(dividend_positive >= divisor_positive){  // 求无符号的商
             ++res;
-            dividend_temp = dividend_temp - divisor_temp;
-
+            dividend_positive = dividend_positive - divisor_positive;
         }
 
-        if(res > INT_MAX || -res < INT_MIN){
+        if(res > INT_MAX || -res < INT_MIN){  // 商越界，返回 2^31 - 1
             return INT_MAX;
         }
 
@@ -79,25 +78,26 @@ public:
         long long res = 0;
         bool isMinus = false; // 结果是否是负数标记
 
-        if(dividend < 0 && divisor < 0){
+        if(dividend < 0 && divisor < 0){   // 判断商的正负号
             isMinus = false;
         }else if(dividend < 0 || divisor < 0){
             isMinus = true;
         }
-        unsigned int dividend_temp = dividend == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(dividend);
-        unsigned int divisor_temp = divisor == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(divisor);
+        unsigned int dividend_positive = dividend == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(dividend); // 将被除数转换成正数
+        unsigned int divisor_positive = divisor == INT_MIN ? (unsigned int) (INT_MAX) + 1:abs(divisor);    // 将除数转换成正数
 
-        while(dividend_temp >= divisor_temp){
-            unsigned int temp = divisor_temp, mask = 1;
-            while(temp && dividend_temp >= temp){
-                dividend_temp -= temp;
-                res += mask;
-                mask <<= 1;
-                temp <<= 1;
+        while(dividend_positive >= divisor_positive){       // 当被除数大于除数时，计算商
+            unsigned int divisor_temp = divisor_positive;   // 倍增除数
+            unsigned int count = 1;                         // 表示已经减去了多少个除数
+            while(divisor_temp && dividend_positive >= divisor_temp){   // 当倍增后的除数大于被除数时重新开始，变成最开始的除数，防止漏掉
+                dividend_positive -= divisor_temp;
+                res += count;
+                count <<= 1;
+                divisor_temp <<= 1;                         // 将除数左移（扩大两倍）
             }
         }
 
-        if(res > INT_MAX || -res < INT_MIN){
+        if(res > INT_MAX || -res < INT_MIN){    // 商越界，返回 2^31 - 1
             return INT_MAX;
         }
 
