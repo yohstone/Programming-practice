@@ -54,6 +54,7 @@ public:
     // 则 dp(cur) = max( max(dp(cur->left), dp(cur->right)), cur->val + unselected(root->left) + unselected(root->right) )
     // 即 seleted(cur) = max(dp(cur->left), dp(cur->right));
     //    unselected(cur) = cur->val + unselected(root->left) + unselected(root->right);
+    // 12ms 98%
     int rob(TreeNode* root) {
         pair<int, int> res = dfs(root);
         return res.first > res.second ? res.first : res.second;
