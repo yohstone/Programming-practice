@@ -28,65 +28,33 @@ using namespace std;
 
 class Solution {
 public:
-    // // 方法1：暴力法
-    // double myPow(double x, int n) {
-    //     long long N = n;
-    //     double res = 1;
-    //     if(n < 0){
-    //         x = 1 / x;
-    //         N = -N;
-    //     }
-    //     for(long long i = 0; i < N; ++i){
-    //         res = res * x;
-    //     }
-    //     return res;
-    // }
-    // // 方法2：快速幂，递归实现
-    // double myPow(double x, int n) {
-    //     long long  N = n;
-    //     if(n < 0){
-    //         N = - N;
-    //         x = 1 / x;
-    //     }
-    //     return fastPow(x, N);
-    // }
-    // double fastPow(double x, long long n){
-    //     if(n == 0)
-    //         return 1.0;
-    //     double half = fastPow(x, n / 2);
-    //     if(n % 2 == 0){
-    //         return half * half;
-    //     }else{
-    //         return half * half * x;
-    //     }
-    // }
-    // 方法3：快速幂，迭代实现
-    double myPow(double x, int n) {
-        if(n == 0){
-            return 1.0;
-        }
-        
-        long long  N = n;
-        if(n < 0){
-            N = - N;
-            x = 1 / x;
-        }
-        return fastPow(x, N);
-    }
-    double fastPow(double x, long long n){
-        double res = 1;
-        double currProduct = x;
-        long long temp = n;
-        while(temp){
-            if(temp & 1){   // n 的二进制中，第 i 位是1，则结果乘以 x^(2^i)
-                res = res * currProduct;
-            }
-            currProduct = currProduct * currProduct;
-            temp >>= 1;
-        }
+    map<char, string> numberToLetter = {
+        {'2', "abc"}, {'3', "def"}, {'4', "ghi"}, {'5', "jkl"},
+        {'6', "mno"}, {'7', "pqrs"}, {'8', "tuv"}, {'9', "wxyz"}
+    };
+
+    // 方法1：递归实现，回溯法
+    vector<string> letterCombinations(string digits) {
+        if(digits.size() == 0)
+            return {};
+        vector<string> res;
+        string currString = "";
+        letterCombinations(digits, res, currString);
         return res;
+
     }
-    
+    // 方法1的递归函数
+    void letterCombinations(const string &digits, vector<string> &res, string &currString){
+        if(currString.size() == digits.size()){
+            res.push_back(currString);
+        }else{
+            for(auto c : numberToLetter[digits[currString.size()]]){ // 遍历当前数字对应的字母组合
+                currString.push_back(c);
+                letterCombinations(digits, res, currString);         // 尝试当前数字的每种对应情况
+                currString.pop_back();
+            }
+        }
+    }
 };
 int main(){
 
