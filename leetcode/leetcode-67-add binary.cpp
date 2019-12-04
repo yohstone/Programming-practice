@@ -2,35 +2,61 @@
 #include<string>
 using namespace std;
 
-/*¸ø¶¨Á½¸ö¶þ½øÖÆ×Ö·û´®£¬·µ»ØËûÃÇµÄºÍ£¨ÓÃ¶þ½øÖÆ±íÊ¾£©¡£
+//    ç»™å®šä¸¤ä¸ªäºŒè¿›åˆ¶å­—ç¬¦ä¸²ï¼Œè¿”å›žä»–ä»¬çš„å’Œï¼ˆç”¨äºŒè¿›åˆ¶è¡¨ç¤ºï¼‰ã€‚
+//
+//    è¾“å…¥ä¸ºéžç©ºå­—ç¬¦ä¸²ä¸”åªåŒ…å«æ•°å­—Â 1Â å’ŒÂ 0ã€‚
+//
+//    ç¤ºä¾‹Â 1:
+//
+//    è¾“å…¥: a = "11", b = "1"
+//    è¾“å‡º: "100"
+//    ç¤ºä¾‹Â 2:
+//
+//    è¾“å…¥: a = "1010", b = "1011"
+//    è¾“å‡º: "10101"
+//
+//    Given two binary strings, return their sum (also a binary string).
+//
+//    The input strings are both non-empty and contains only characters 1 orÂ 0.
+//
+//    Example 1:
+//
+//    Input: a = "11", b = "1"
+//    Output: "100"
+//    Example 2:
+//
+//    Input: a = "1010", b = "1011"
+//    Output: "10101"
 
-ÊäÈëÎª·Ç¿Õ×Ö·û´®ÇÒÖ»°üº¬Êý×Ö 1 ºÍ 0¡£
-*/
+
 class Solution {
 public:
+    // æ–¹æ³•ï¼šç›´æŽ¥ä»Žä¸¤ä¸ªå­—ç¬¦ä¸²å°¾éƒ¨å¼€å§‹éåŽ†ç›¸åŠ ï¼Œè®¡ç®—å’Œä¸Žè¿›ä½
     string addBinary(string a, string b) {
-        string res="";
-        int carry=0, sum;
-        int i=a.length()-1, j=b.length()-1;
-        while( i >= 0  || j >= 0 || carry ){
+        string res = "";
+        int carry = 0, sum;  // æ¯ä¸€ä½çš„è¿›ä½ä¸Žå’Œ
+        int i = a.length() - 1, j = b.length() - 1;
+        while( i >= 0  || j >= 0 || carry ) {
             char c;
-            int x=0, y=0;
-            if( i >= 0) x = a[i--]-'0';
-            if(j >= 0) y = b[j--]-'0';
-            sum= x + y +carry;
-            c = '0' + sum%2;
+            int x = 0, y = 0;
+            if( i >= 0)
+                x = a[i--] - '0';
+            if(j >= 0)
+                y = b[j--] - '0';
+            sum = x + y + carry;
+            c = '0' + sum % 2;
             res = c + res;
-            carry = sum/2;
+            carry = sum / 2;
         }
         return res;
     }
 };
-int main(){
+int main() {
     Solution s;
     char a[128], b[128];
-    while(scanf("%s %s", a, b) == 2){
-    	cout << s.addBinary(a, b) << endl;
-	}
+    while(scanf("%s %s", a, b) == 2) {
+        cout << s.addBinary(a, b) << endl;
+    }
 
     return 0;
 
