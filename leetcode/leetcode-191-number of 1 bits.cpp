@@ -1,15 +1,16 @@
 #include<iostream>
 using namespace std;
 
-/* Write a function that takes an unsigned integer and return the number of '1' bits it has (also known as the Hamming weight).
- *
- *
- * Example 1:
- *
- * Input: 00000000000000000000000000001011
- * Output: 3
- * Explanation: The input binary string 00000000000000000000000000001011 has a total of three '1' bits.
- */
+//编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为 ‘1’ 的个数（也被称为汉明重量）。
+//
+//Write a function that takes an unsigned integer and return the number of '1' bits it has (also known as the Hamming weight).
+//
+//Example 1:
+//
+//Input: 00000000000000000000000000001011
+//Output: 3
+//Explanation: The input binary string 00000000000000000000000000001011 has a total of three '1' bits.
+
 
 
 
