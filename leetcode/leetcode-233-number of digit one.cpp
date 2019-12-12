@@ -123,6 +123,7 @@ public:
     // 将 i 从 1 遍历到 n，每次遍历 ii扩大 10 倍：
     // (n / ( i * 10 ) ) * i 表示 ( i * 10 ) 位上的 '1' 的个数
     // min( max ( ( n % ( i * 10 ) ) - i + 1, 0 ), i ) 表示需要额外计算的 ( i * 10 ) 位上 '1' 的个数
+    // 时间复杂度: O(log10(n))   n 的位数
     int countDigitOne3(int n) {
         int countr = 0;
         for (long long i = 1; i <= n; i *= 10) {
