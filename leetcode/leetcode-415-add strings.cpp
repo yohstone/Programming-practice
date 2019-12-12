@@ -32,14 +32,14 @@ public:
         int p2 = num2.size() - 1;
         while(p1 >= 0 || p2 >= 0 || carry != 0 ){
             int sum;
-            if(p1 >= 0 && p2 >= 0){
-                sum = num1[p1] - '0' + num2[p2] - '0' + carry;
+            if(p1 >= 0 && p2 >= 0){                 
+                sum = num1[p1] - '0' + num2[p2] - '0' + carry;  // num1 的当前位 + num2 的当前位 + 进位
             }else if(p1 >= 0){
-                sum = num1[p1] - '0' + carry;
+                sum = num1[p1] - '0' + carry;                   // 只加 num1 的当前位和进位
             }else if(p2 >= 0){
-                sum = num2[p2] - '0' + carry;
+                sum = num2[p2] - '0' + carry;                   // 只加 num2 的当前位和进位
             }else{
-                sum = carry;
+                sum = carry;                                    // 只加进位
             }
             carry = sum / 10;
             char tmp = '0' + sum % 10;
