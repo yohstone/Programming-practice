@@ -43,15 +43,15 @@ public:
         for(auto p : prerequisites){    // 计算每个课程的入度
             ++in_dgree[p[0]];
         }
-        queue<int> que;
+        queue<int> que;                 // 通过队列暂存求拓补排序的每一步之后入度为 0 的课程
         for(int i = 0; i < numCourses; ++i){
             if(in_dgree[i] == 0){
-                que.push(i);            // 将入度为 0 的课程加入队列
+                que.push(i);            // 先将初始入度为 0 的课程加入队列
             }
         }
 
         vector<int> res;
-        while(!que.empty()){            // 拓补排序结果
+        while(!que.empty()){            // 求拓补排序结果
             int course = que.front();
             que.pop();
             res.push_back(course);
