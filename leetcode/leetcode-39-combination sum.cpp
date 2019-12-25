@@ -48,8 +48,10 @@ private:
 
 public:
     // 方法1 ： 回溯法
+    // 使用 path 暂存当前递归的中已选择的候选数，每选一个就用 target 减去当前的数
+    // 当 target 为 0 时，当前 path 满足要求，存入结果数组
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        sort(candidates.begin(), candidates.end()); // x先将候选数组排序，以实现剪枝
+        sort(candidates.begin(), candidates.end()); // 先将候选数组排序，以实现剪枝
         this->candidates = candidates;
         DFS(0, target);
 
@@ -67,6 +69,34 @@ public:
             DFS(i, target - candidates[i]);
             path.pop_back();                    // 恢复上一状态
         }
+    }
+
+    // 方法2 ： 动态规划
+    // dict[i, []] ： 目标值为 i 时，对应的组合方式种类
+    // dict[i, []] = dict[i - num, [] ] 中每种组合方式加上 num
+    vector<vector<int>> combinationSum2(vector<int> & candidates, int target){
+        unordered_map<int, set<vector<int>> > dict;
+        for(int i = 1; i <= target; ++i){               // 从 1 遍历到 target，求每个数的组合方式
+            for(int num : candidates){                  // 遍历候选数数组，确定组合中可以包含的数
+                if(i == num){
+                    dict[i].insert(vector<int> {num});  // 候选数组中有目标值时，目标值自身可作为一种组合方式
+                }
+                else if(i > num){
+                    for(auto vec : dict[i - num]){      // 遍历目标数为 i - num 时的所有组合方式
+                        vec.push_back(num);
+                        sort(vec.begin(), vec.end());   // 排序后能达到去重的效果，保证了每个 vector 在 set 中是唯一的
+                        if(dict[i].count(vec) == 0){    // 若 set 中没有当前加入了 num 的 vector，则将 vector 插入
+                            dict[i].insert(vec);
+                        }
+                    }
+                }
+            }
+        }
+        vector<vector<int>> res;
+        for(auto vec : dict[target]){                   // 将目标值的组合方式数组转换成需返回的 vector
+            res.push_back(vec);
+        }
+        return res;
     }
 };
 int main(){
