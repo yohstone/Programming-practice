@@ -60,7 +60,36 @@ public:
     // 仿照快排，选择一个基准，把小于基准的放在基准左边，大于基准的放在基准右边
     // 然后使用基准的位置与 n - k 进行比较，用于决定继续递归左边还是右边
     int findKthLargest3(vector<int>& nums, int k) {
-
+        int len = nums.size();
+        if(len <= 0 || k > len){
+            return 0;
+        }
+        int res = myPartition(nums, 0, len - 1, len - k);
+        return res;
+    }
+    // 划分函数，对 nums 进行一次划分，然后判断需要继续在左边进行划分还是右边
+    int myPartition(vector<int>& nums, int low, int high, int target_k){
+        int len = nums.size();
+        int privot = nums[low]; // 选择 nums[low] 作为基准
+        int low_tmp = low, high_tmp = high;
+        while(low < high){
+            while(low < high && nums[high] >= privot){      // 找到小于 privot 的数
+                --high;
+            }
+            nums[low] = nums[high];                         // 将小的数放到左边
+            while(low < high && nums[low] <= privot){       // 找到大于 privot 的数
+                ++low;
+            }
+            nums[high] = nums[low];                         // 将大的数放到右边
+        }
+        nums[low] = privot;                                 // low == high 的位置放入基准
+        if(low == target_k ){
+            return low;
+        }else if(low < target_k){
+            return myPartition(nums, low + 1, high_tmp, target_k);
+        }else{
+            return myPartition(nums, low_tmp, low - 1, target_k);
+        }
     }
 
 };
