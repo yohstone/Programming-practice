@@ -37,6 +37,7 @@ public:
         sort(nums.begin(), nums.end());
         return nums[len - k];
     }
+
     // 方法2：小顶堆法，维护一个大小为 k 的小顶堆，堆里为当前最大的 k 个数，
     // 当堆的大小大于 k 时弹出堆顶元素
     // 最后堆顶的元素即为第 k 个最大的元素
@@ -64,8 +65,8 @@ public:
         if(len <= 0 || k > len){
             return 0;
         }
-        int res = myPartition(nums, 0, len - 1, len - k);
-        return res;
+        int res_pos = myPartition(nums, 0, len - 1, len - k);
+        return nums[res_pos];
     }
     // 划分函数，对 nums 进行一次划分，然后判断需要继续在左边进行划分还是右边
     int myPartition(vector<int>& nums, int low, int high, int target_k){
