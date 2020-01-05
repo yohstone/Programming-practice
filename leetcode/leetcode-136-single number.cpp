@@ -29,7 +29,8 @@ using namespace std;
 class Solution {
 public:
     // 方法1，数学：
-    // 2*(a+b+c) - (a+a+b+b+c) = c   利用 set 的唯一性，先将 nums 放入 set 中，然后求 2 倍 set 中元素的和，最后减去 nums 元素的和
+    // 2*(a+b+c) - (a+a+b+b+c) = c   利用 set 的唯一性，先将 nums 放入 set 中，
+    // 然后求 2 倍 set 中元素的和，最后减去 nums 元素的和
     // 时间复杂度  O(2n) 60ms 空间复杂度 O(n)
     int singleNumber1(vector<int>& nums) {
         int len = nums.size();
